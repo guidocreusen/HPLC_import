@@ -12,9 +12,11 @@ class MainController:
         
         print("initializing program")
         
+        self.number_of_traces = 4
+        
         #build trace controller first so it can be sent to the trace controller
         print("building controllers")        
-        self.trace_controller = controllers.trace_controller.TraceController()
+        self.trace_controller = controllers.trace_controller.TraceController(self.number_of_traces)
         self.GUI_controller = controllers.GUI_controller.GUIcontroller(self.trace_controller)
         
         

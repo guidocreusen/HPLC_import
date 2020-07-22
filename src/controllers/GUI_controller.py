@@ -5,7 +5,7 @@ class GUIcontroller():
     
     def __init__(self, trace_controller):
         
-        print("initializing GUI controller")
+        print("building GUI controller object")
         self.trace_controller = trace_controller
          
         print("initializing GUI root / master frame")
@@ -17,11 +17,11 @@ class GUIcontroller():
         
     def build_trace_input_blocks(self):
         
-            print("building trace input frames")
+            print("creating trace input frames")
             self.trace_input_blocks = {} #creates a list for the trace input block objects
             
             #creates the input block objects
-            for trace_number in range(4):
+            for trace_number in range(self.trace_controller.number_of_traces):
                     self.trace_input_blocks[trace_number] = GUI_elements.trace_input_block.TraceInputBlock(self, self.master, trace_number)
                     print("created trace input block object " + str(trace_number))
                     

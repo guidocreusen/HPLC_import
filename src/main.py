@@ -3,6 +3,7 @@
 
 #import the controller classes
 import controllers.GUI_controller
+import controllers.trace_controller
 
 
 class MainController:
@@ -11,7 +12,11 @@ class MainController:
         
         print("initializing program")
         
-        self.GUI_controller = controllers.GUI_controller.GUIcontroller()
+        #build trace controller first so it can be sent to the trace controller
+        print("building controllers")        
+        self.trace_controller = controllers.trace_controller.TraceController()
+        self.GUI_controller = controllers.GUI_controller.GUIcontroller(self.trace_controller)
+        
         
     def start(self):
         

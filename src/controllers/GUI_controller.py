@@ -3,9 +3,10 @@ import GUI_elements.trace_input_block
 
 class GUIcontroller():
     
-    def __init__(self):
+    def __init__(self, trace_controller):
         
         print("initializing GUI controller")
+        self.trace_controller = trace_controller
          
         print("initializing GUI root / master frame")
         self.master = tk.Tk() # top level Frame, which also can start the program
@@ -21,7 +22,7 @@ class GUIcontroller():
             
             #creates the input block objects
             for trace_number in range(4):
-                    self.trace_input_blocks[trace_number] = GUI_elements.trace_input_block.TraceInputBlock(self, trace_number)
+                    self.trace_input_blocks[trace_number] = GUI_elements.trace_input_block.TraceInputBlock(self, self.master, trace_number)
                     print("created trace input block object " + str(trace_number))
                     
         

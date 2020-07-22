@@ -15,7 +15,14 @@ class TraceInputBlock():
             self.master_frame = master_frame
             self.trace_number = trace_number
             
+            #initializing frame attributes, not sctrictly necessary but for clarity
+            self.main_frame = None
+            self.title_subframe = None
+            
             self.build_input_block()
+            
+            self.build_title_subframe()
+            self.title_subframe.pack()
             
         def build_input_block(self):
             
@@ -24,3 +31,9 @@ class TraceInputBlock():
             # creates the tkinter Frame object holding the sub-frames (label, load/clear buttons, file count, name filed)
             self.main_frame = tk.Frame(self.master_frame, relief = tk.GROOVE, bd = 3)
             
+        def build_title_subframe(self):
+            
+            print("building title subframe for trace " + str(self.trace_number))
+            
+            self.title_subframe = tk.Frame(self.main_frame)
+            tk.Label(self.title_subframe, text = "trace " + str(self.trace_number), font = "Helvetica 12 bold").pack(pady = 3)

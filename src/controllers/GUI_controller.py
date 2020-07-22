@@ -21,9 +21,14 @@ class GUIcontroller():
             self.trace_input_blocks = {} #creates a list for the trace input block objects
             
             #creates the input block objects
-            for trace_number in range(self.trace_controller.number_of_traces):
-                    self.trace_input_blocks[trace_number] = GUI_elements.trace_input_block.TraceInputBlock(self, self.master, trace_number)
-                    print("created trace input block object " + str(trace_number))
+            for n in range(self.trace_controller.number_of_traces):
+                    
+                    self.trace_input_blocks[n] = GUI_elements.trace_input_block.TraceInputBlock(self, self.master, n)
+                    self.trace_input_blocks[n].main_frame.pack()
+                    
+                    
+                    print("created trace input block object " + str(n))
+                    
                     
         
     def start_GUI(self):

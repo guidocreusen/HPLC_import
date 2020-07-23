@@ -40,5 +40,7 @@ class TraceController():
                 s2 = self.traces[1].measurement_runs[n].signal_data[m]
                 s3 = self.traces[2].measurement_runs[n].signal_data[m]
                 new_row = [t, s1, s2, s3]
+                
                 print(str(new_row))
+                
             

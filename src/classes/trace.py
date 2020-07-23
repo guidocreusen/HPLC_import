@@ -22,47 +22,11 @@ class Trace():
         
     def load_baseline(self):
         
-        print("loading baseline file to trace")
-        
         baseline_filepath = askopenfilename(initialdir = "", filetypes = (("Text File", "*.txt"),), title = "Choose a baseline file.")
+           
+        #create the baseline run instance as an attribute
+        self.baseline_run = self.load_file_to_run(baseline_filepath)
         
-        print ("\nloading file: " + baseline_filepath)
-        
-        try:
-            baseline_file = open(baseline_filepath, 'r')
-                
-            #load all lines into a list, and remove the newline ends
-            baseline_file_lines = [line.strip('\n') for line in baseline_file.readlines()] # in python3 map use is discouraged and ist comprehension is faster
-                
-            #remove header lines
-            for n in range(self.headerlines):
-                del baseline_file_lines[0]
-            
-            print("File readout:\n" + str(baseline_file_lines))
-            
-            #create the baseline run instance as an attribute
-            self.baseline_run = classes.run.Run(self)
-            
-            #read the lines into a run
-            for n, line in enumerate(baseline_file_lines):
-                print(str(n) + " " + str(line))
-                
-                line_data = line.split('\t')
-                print("t = " + str(line_data[self.column_time]))
-                print("A = " + str(line_data[self.column_signal]))
-                
-                self.baseline_run.time_data[n] = float(line_data[self.column_time].replace(',','.'))
-                self.baseline_run.signal_data[n] = float(line_data[self.column_signal].replace(',','.'))
-                
-            print("run data")
-            print(str(self.baseline_run.time_data))
-            print(str(self.baseline_run.signal_data))
-            
-                
-        #if the loading fails or the user closes the file load dialog    
-        except:
-            
-            return False
         
     def load_measurements(self):
         
@@ -73,5 +37,40 @@ class Trace():
         
         
         print ("\nloading files: " + measurements_filepaths_list)
+        
+    #takes a file path and returns a run instance
+    def load_file_to_run(self, filepath):
+        
+        print("loading file " + str(filepath) + " into run instance")
+       
+        try:
+            #load all lines from the file into a list, and remove the newline ends
+            file = open(filepath, 'r')
+            file_lines = [line.strip('\n') for line in file.readlines()]
+            print("opened file")
+                
+            #remove header lines
+            for n in range(self.headerlines):
+                del file_lines[0]
+            print("deleted header lines")
+            
+            run = classes.run.Run(self)
+            print("created run instance")
+        
+            #read the lines into a run, with the class-specified column indexes
+            for n, line in enumerate(file_lines):                
+                line_data = line.split('\t')                
+                run.time_data[n] = float(line_data[self.column_time].replace(',','.'))
+                run.signal_data[n] = float(line_data[self.column_signal].replace(',','.'))
+                
+            print("file to run conversion successful")
+            return run
+                
+        except:
+            
+            print("file to run conversion failed")
+            return None
+        
+
 
         

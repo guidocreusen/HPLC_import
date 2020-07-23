@@ -82,7 +82,7 @@ class TraceInputBlock():
             
         def load_baseline(self):
             
-            print("clicked load bsaeline button")
+            print("clicked load baseline button")
             
             self.trace.load_baseline()
             

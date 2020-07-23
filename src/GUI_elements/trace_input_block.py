@@ -47,13 +47,27 @@ class TraceInputBlock():
             print("building buttons subframe for trace " + str(self.trace_number))
             
             self.buttons_subframe = tk.Frame(self.main_frame)
-            tk.Button(self.buttons_subframe, text = "load", command = self.load, padx = 10, pady = 2).grid(row = 0, column = 0, padx = 5)
-            tk.Button(self.buttons_subframe, text = "clear", command = self.clear, padx = 10, pady = 2).grid(row = 0, column = 1, padx = 5)
             
-        def load(self):
+            tk.Label(self.buttons_subframe, text = "measurement files", font = "Helvetica 10").grid(row = 0, column = 0, padx = 5)
+            tk.Button(self.buttons_subframe, text = "load", command = self.load_measurements, padx = 10, pady = 2).grid(row = 0, column = 1, padx = 5, pady = 2)
+            tk.Button(self.buttons_subframe, text = "clear", command = self.clear_measurements, padx = 10, pady = 2).grid(row = 0, column = 2, padx = 5, pady = 2)
             
-            print("clicked load button")
+            tk.Label(self.buttons_subframe, text = "baseline file", font = "Helvetica 10").grid(row = 1, column = 0, padx = 5)
+            tk.Button(self.buttons_subframe, text = "load", command = self.load_baseline, padx = 10, pady = 2).grid(row = 1, column = 1, padx = 5, pady = 2)
+            tk.Button(self.buttons_subframe, text = "clear", command = self.clear_baseline, padx = 10, pady = 2).grid(row = 1, column = 2, padx = 5, pady = 2)
             
-        def clear(self):
+        def load_measurements(self):
             
-            print("clicked clear button")
+            print("clicked load measurements button")
+            
+        def clear_measurements(self):
+            
+            print("clicked clear measurements button")
+            
+        def load_baseline(self):
+            
+            print("clicked load bsaeline button")
+            
+        def clear_baseline(self):
+            
+            print("clicked clear baseline button")

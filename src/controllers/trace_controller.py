@@ -33,7 +33,6 @@ class TraceController():
         export_folder = askdirectory(initialdir = "", title = "Choose a folder.")
         print("chosen file path: " + export_folder)
         
-                   
         
         
         #overview of export function:
@@ -43,12 +42,20 @@ class TraceController():
         # 4 - write the data for each measurement into a file
         
         for n, run in enumerate(self.traces[0].measurement_runs):
+            
+            save_path = export_folder + "/" + run.filename.strip("UV_VIS_1.TXT") + ".TXT"
+            save_file = open(save_path, 'w') # mode w means the file will be empty and overwritten
+            
+            save_file.write("time\tsignal1\tsignal2\tsignal3\n")
+            print("time\tsignal1\tsignal2\tsignal3")
+                        
             for m, t in enumerate(run.time_data):
                 
                 s1 = run.signal_data[m]
                 s2 = self.traces[1].measurement_runs[n].signal_data[m]
                 s3 = self.traces[2].measurement_runs[n].signal_data[m]
                 new_row = [t, s1, s2, s3]
+                save_file.write(str(t) + "\t" + str(s1) + "\t" + str(s2) + "\t" + str(s3) + "\n")
                 
                 print(str(new_row))
                 

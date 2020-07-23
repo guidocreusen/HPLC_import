@@ -61,7 +61,7 @@ class Trace():
                 del file_lines[0]
             print("deleted header lines")
             
-            run = classes.run.Run(self)
+            run = classes.run.Run(self, filepath)
             print("created run instance")
         
             #read the lines into a run, with the class-specified column indexes

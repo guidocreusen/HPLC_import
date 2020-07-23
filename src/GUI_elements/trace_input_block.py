@@ -22,13 +22,10 @@ class TraceInputBlock():
             self.n_baseline = tk.IntVar(0)
             self.n_measurements = tk.IntVar(0)
             
-            
             #initializing frame attributes, not sctrictly necessary but for clarity
             self.main_frame = None
             self.title_subframe = None
             self.buttons_subframe = None
-            
-            
             
             #calls the functions that build the GUI
             self.build_input_block()
@@ -65,18 +62,23 @@ class TraceInputBlock():
             tk.Button(self.buttons_subframe, text = "load", command = self.load_baseline, padx = 10, pady = 2).grid(row = 1, column = 1, padx = 5, pady = 2)
             tk.Button(self.buttons_subframe, text = "clear", command = self.clear_baseline, padx = 10, pady = 2).grid(row = 1, column = 2, padx = 5, pady = 2)
             
-            tk.Label(self.buttons_subframe, textvariable = self.n_measurements, font = "Helvetica 12 bold", fg = "orange").grid(row = 0, column = 3, padx = 5)
-            tk.Label(self.buttons_subframe, textvariable = self.n_baseline, font = "Helvetica 12 bold", fg = "orange").grid(row = 1, column = 3, padx = 5)
+            tk.Label(self.buttons_subframe, textvariable = self.n_measurements, font = "Helvetica 12 bold").grid(row = 0, column = 3, padx = 5)
+            tk.Label(self.buttons_subframe, textvariable = self.n_baseline, font = "Helvetica 12 bold").grid(row = 1, column = 3, padx = 5)
             
         def load_measurements(self):
             
             print("clicked load measurements button")
             
             self.trace.load_measurements()
+            self.n_measurements.set(len(self.trace.measurement_runs))
+            
             
         def clear_measurements(self):
             
             print("clicked clear measurements button")
+            self.trace.measurement_runs = {}
+            self.n_measurements.set(len(self.trace.measurement_runs))
+
             
         def load_baseline(self):
             
@@ -84,6 +86,18 @@ class TraceInputBlock():
             
             self.trace.load_baseline()
             
+            if self.trace.baseline_run:
+                self.n_baseline.set(1)
+            else:
+                self.n_baseline.set(0)
+            
+            
         def clear_baseline(self):
             
             print("clicked clear baseline button")
+            self.trace.baseline_run = None
+            
+            if self.trace.baseline_run:
+                self.n_baseline.set(1)
+            else:
+                self.n_baseline.set(0)

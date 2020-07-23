@@ -19,7 +19,7 @@ class MainController:
         self.trace_controller = controllers.trace_controller.TraceController(self.number_of_traces)
         self.GUI_controller = controllers.GUI_controller.GUIcontroller(self.trace_controller)
         
-        
+        33
     def start(self):
         
         print("starting program")

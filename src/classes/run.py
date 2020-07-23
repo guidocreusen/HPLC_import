@@ -3,9 +3,11 @@
 
 class Run():
     
-    def __init__(self):
+    def __init__(self, trace):
         
         print("buidling run object")
         
         self.time_data = {}
         self.signal_data = {}
+        
+        self.trace = trace

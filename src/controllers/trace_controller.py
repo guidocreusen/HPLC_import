@@ -2,6 +2,7 @@
 #a trace holds multiple measurements, and a single baseline
 
 import classes.trace
+from tkinter.filedialog import askopenfilename
 
 class TraceController():
     

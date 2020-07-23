@@ -14,8 +14,9 @@ class TraceInputBlock():
             #catches the parameters and saves them as attributes for the instance
             self.GUI_controller = GUI_controller
             self.trace_controller = trace_controller
-            self.master_frame = master_frame
             self.trace_number = trace_number
+            self.trace = trace_controller.traces[trace_number]
+            self.master_frame = master_frame
             
             #creates tkinter IntVars to show the number of files loaded
             self.n_baseline = tk.IntVar(0)
@@ -73,6 +74,8 @@ class TraceInputBlock():
             
             print("clicked load measurements button")
             
+            self.trace.load_measurements()
+            
         def clear_measurements(self):
             
             print("clicked clear measurements button")
@@ -80,6 +83,8 @@ class TraceInputBlock():
         def load_baseline(self):
             
             print("clicked load bsaeline button")
+            
+            self.trace.load_baseline()
             
         def clear_baseline(self):
             

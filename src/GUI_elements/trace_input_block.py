@@ -7,19 +7,29 @@ import tkinter as tk
 
 class TraceInputBlock():
     
-        def __init__(self, GUI_controller, master_frame, trace_number):
+        def __init__(self, GUI_controller, trace_controller, master_frame, trace_number):
             
             print("initializing trace input block " + str(trace_number))
             
+            #catches the parameters and saves them as attributes for the instance
             self.GUI_controller = GUI_controller
+            self.trace_controller = trace_controller
             self.master_frame = master_frame
             self.trace_number = trace_number
+            
+            #creates tkinter IntVars to show the number of files loaded
+            self.n_baseline = tk.IntVar(0)
+            self.n_measurements = tk.IntVar(0)
+            
             
             #initializing frame attributes, not sctrictly necessary but for clarity
             self.main_frame = None
             self.title_subframe = None
             self.buttons_subframe = None
             
+            
+            
+            #calls the functions that build the GUI
             self.build_input_block()
             
             self.build_title_subframe()
@@ -55,6 +65,9 @@ class TraceInputBlock():
             tk.Label(self.buttons_subframe, text = "baseline file", font = "Helvetica 10").grid(row = 1, column = 0, padx = 5)
             tk.Button(self.buttons_subframe, text = "load", command = self.load_baseline, padx = 10, pady = 2).grid(row = 1, column = 1, padx = 5, pady = 2)
             tk.Button(self.buttons_subframe, text = "clear", command = self.clear_baseline, padx = 10, pady = 2).grid(row = 1, column = 2, padx = 5, pady = 2)
+            
+            tk.Label(self.buttons_subframe, textvariable = self.n_measurements, font = "Helvetica 12 bold", fg = "orange").grid(row = 0, column = 3, padx = 5)
+            tk.Label(self.buttons_subframe, textvariable = self.n_baseline, font = "Helvetica 12 bold", fg = "orange").grid(row = 1, column = 3, padx = 5)
             
         def load_measurements(self):
             

@@ -23,7 +23,7 @@ class GUIcontroller():
             #creates the input block objects
             for n in range(self.trace_controller.number_of_traces):
                     
-                    self.trace_input_blocks[n] = GUI_elements.trace_input_block.TraceInputBlock(self, self.master, n)
+                    self.trace_input_blocks[n] = GUI_elements.trace_input_block.TraceInputBlock(self, self.trace_controller, self.master, n)
                     self.trace_input_blocks[n].main_frame.pack()
                     
                     

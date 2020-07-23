@@ -5,7 +5,7 @@ class Run():
     
     def __init__(self, trace):
         
-        print("buidling run object")
+        print("buidling run instance")
         
         self.time_data = {}
         self.signal_data = {}

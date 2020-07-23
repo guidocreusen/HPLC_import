@@ -14,7 +14,7 @@ class Trace():
     
     def __init__(self):
         
-        print("building trace object")
+        print("building trace instance")
         
         #initialize baseline run object and measurement run objects
         self.baseline_run = None
@@ -22,23 +22,26 @@ class Trace():
         
     def load_baseline(self):
         
+        print("loading baseline")
+        
         baseline_filepath = askopenfilename(initialdir = "", filetypes = (("Text File", "*.txt"),), title = "Choose a baseline file.")
            
         #create the baseline run instance as an attribute
         self.baseline_run = self.load_file_to_run(baseline_filepath)
         
-        
     def load_measurements(self):
         
-        print("loading measurement files to trace")
+        print("loading measurements")
         
         measurements_filepaths = askopenfilenames(initialdir = "", filetypes = (("Text File", "*.txt"),), title = "Choose measurement files.")
         measurements_filepaths_list = list(measurements_filepaths)
+        print("\nloading files: " + str(measurements_filepaths_list))
         
-        
-        print ("\nloading files: " + measurements_filepaths_list)
-        
-    #takes a file path and returns a run instance
+        for n, filepath in enumerate(measurements_filepaths_list):
+            self.measurement_runs[n] = self.load_file_to_run(filepath)
+            print("loaded measurement file to run")
+            
+    #takes a file path and returns a run instance, and None upon failure
     def load_file_to_run(self, filepath):
         
         print("loading file " + str(filepath) + " into run instance")
@@ -67,7 +70,6 @@ class Trace():
             return run
                 
         except:
-            
             print("file to run conversion failed")
             return None
         

@@ -9,7 +9,7 @@ class TraceInputBlock():
     
         def __init__(self, GUI_controller, trace_controller, master_frame, trace_number):
             
-            print("initializing trace input block " + str(trace_number))
+            print("building trace input block instance " + str(trace_number))
             
             #catches the parameters and saves them as attributes for the instance
             self.GUI_controller = GUI_controller
@@ -40,9 +40,7 @@ class TraceInputBlock():
             self.buttons_subframe.pack()
             
         def build_input_block(self):
-            
-            print("building trace input block " + str(self.trace_number))
-            
+                        
             # creates the tkinter Frame object holding the sub-frames (label, load/clear buttons, file count, name filed)
             self.main_frame = tk.Frame(self.master_frame, relief = tk.GROOVE, bd = 3)
             

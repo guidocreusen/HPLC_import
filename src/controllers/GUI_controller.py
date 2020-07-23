@@ -17,7 +17,7 @@ class GUIcontroller():
         
     def build_trace_input_blocks(self):
         
-            print("creating trace input frames")
+            print("creating trace input blocks")
             self.trace_input_blocks = {} #creates a list for the trace input block objects
             
             #creates the input block objects
@@ -27,7 +27,7 @@ class GUIcontroller():
                     self.trace_input_blocks[n].main_frame.pack()
                     
                     
-                    print("created trace input block object " + str(n))
+                    print("created trace input block instance " + str(n))
                     
                     
         

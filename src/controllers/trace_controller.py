@@ -46,22 +46,37 @@ class TraceController():
             save_path = export_folder + "/" + run.filename.strip("UV_VIS_1.TXT") + ".TXT"
             save_file = open(save_path, 'w') # mode w means the file will be empty and overwritten
             
-            save_file.write("time\tsignal1\tsignal2\tsignal3\tsubtr1\tsubtr2\tsubtr3\n")
+            save_file.write("time\tsignal1\tsignal2\tsignal3\tsubtracted1\tsubtracted2\tsubtracted3\tnormalized1\tnormalized2\tnormalized3\n")
             print("time\tsignal1\tsignal2\tsignal3")
                         
-            for m, t in enumerate(run.time_data):
-                
-                s1 = run.signal_data[m]
-                s2 = self.traces[1].measurement_runs[n].signal_data[m]
-                s3 = self.traces[2].measurement_runs[n].signal_data[m]
-                
-                bs1 = s1 - self.traces[0].baseline_run.signal_data[m]
-                bs2 = s2 - self.traces[1].baseline_run.signal_data[m]
-                bs3 = s3 - self.traces[2].baseline_run.signal_data[m]
-                
-                print(str(t) + "\t" + str(s1) + "\t" + str(s2) + "\t" + str(s3) + "\t" + str(bs1) + "\t" + str(bs2) + "\t" + str(bs3))
-                save_file.write(str(t) + "\t" + str(s1) + "\t" + str(s2) + "\t" + str(s3) + "\t" + str(bs1) + "\t" + str(bs2) + "\t" + str(bs3) + "\n")
-                
-                
-                
+            s1 = run.signal_data
+            s2 = self.traces[1].measurement_runs[1].signal_data
+            s3 = self.traces[2].measurement_runs[2].signal_data
             
+            bs1 = []
+            bs2 = []
+            bs3 = []
+            ns1 = []
+            ns2 = []
+            ns3 = []
+            
+            #subtract background and append each line to lists bs1/2/3
+            for m in range(len(run.time_data)):                
+                bs1.append(s1[m] - self.traces[0].baseline_run.signal_data[m])
+                bs2.append(s2[m] - self.traces[1].baseline_run.signal_data[m])
+                bs3.append(s3[m] - self.traces[2].baseline_run.signal_data[m])
+            
+            #find min and max of subtracted traces
+            s1max = max(bs1)
+            s1min = min(bs1)                    
+            s2max = max(bs2)
+            s2min = min(bs2)
+            s3max = max(bs3)
+            s3min = min(bs3)
+            
+            for m, t in enumerate(run.time_data):                
+                ns1.append((bs1[m]-s1min)/(s1max-s1min))
+                ns2.append((bs2[m]-s2min)/(s2max-s2min))
+                ns3.append((bs3[m]-s3min)/(s3max-s3min))
+                
+                save_file.write(str(t) + "\t" + str(s1[m]) + "\t" + str(s2[m]) + "\t" + str(s3[m]) + "\t" + str(bs1[m]) + "\t" + str(bs2[m]) + "\t" + str(bs3[m]) + "\t" + str(ns1[m])  + "\t" + str(ns2[m])  + "\t" + str(ns3[m]) + "\n")

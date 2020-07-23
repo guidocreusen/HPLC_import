@@ -74,6 +74,7 @@ class Trace():
             return run
                 
         except:
+            
             print("file to run conversion failed")
             return None
         

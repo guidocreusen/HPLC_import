@@ -3,6 +3,8 @@
 
 import classes.trace
 from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import asksaveasfilename 
+from tkinter.filedialog import askdirectory
 
 class TraceController():
     
@@ -27,6 +29,13 @@ class TraceController():
             
     def export_measurements(self):
         
+        #first ask for a folder to save to
+        export_folder = askdirectory(initialdir = "", title = "Choose a folder.")
+        print("chosen file path: " + export_folder)
+        
+                   
+        
+        
         #overview of export function:
         # 1 - iterate through the first trace measurement list (enumerate)
         # 2 - iterature through the data points of each run
@@ -42,5 +51,6 @@ class TraceController():
                 new_row = [t, s1, s2, s3]
                 
                 print(str(new_row))
+                
                 
             

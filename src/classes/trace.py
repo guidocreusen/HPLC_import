@@ -1,6 +1,7 @@
 #trace object class
 #a trace consists of a baseline, and multiple measurements
 import classes.run
+import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from tkinter.filedialog import askopenfilenames
 
@@ -24,6 +25,10 @@ class Trace():
         
         print("loading measurement files to trace")
         
-        measurements_filepath = askopenfilenames(initialdir = "", filetypes = (("Text File", "*.txt"),), title = "Choose measurement files.")
+        measurements_filepaths = askopenfilenames(initialdir = "", filetypes = (("Text File", "*.txt"),), title = "Choose measurement files.")
+        measurements_filepaths_list = list(measurements_filepaths)
         
+        
+        print(measurements_filepaths)
+        print(measurements_filepaths_list)
         

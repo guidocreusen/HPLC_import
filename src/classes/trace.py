@@ -35,14 +35,14 @@ class Trace():
     def load_measurements(self):
         
         print("loading measurements")
-        self.measurement_runs = {}
+        self.measurement_runs = []
         
         measurements_filepaths = askopenfilenames(initialdir = "", filetypes = (("Text File", "*.txt"),), title = "Choose measurement files.")
         measurements_filepaths_list = sorted(list(measurements_filepaths))
         print("\nloading files: " + str(measurements_filepaths_list))
         
         for n, filepath in enumerate(measurements_filepaths_list):
-            self.measurement_runs[n] = self.load_file_to_run(filepath)
+            self.measurement_runs.append(self.load_file_to_run(filepath))
             print("loaded measurement file " + str(filepath) + " to run")
             
     #takes a file path and returns a run instance, and None upon failure.
@@ -67,8 +67,8 @@ class Trace():
             #read the lines into a run, with the class-specified column indexes
             for n, line in enumerate(file_lines):                
                 line_data = line.split('\t')                
-                run.time_data[n] = float(line_data[self.column_time].replace(',','.'))
-                run.signal_data[n] = float(line_data[self.column_signal].replace(',','.'))
+                run.time_data.append(float(line_data[self.column_time].replace(',','.')))
+                run.signal_data.append(float(line_data[self.column_signal].replace(',','.')))
                 
             print("file to run conversion successful")
             return run

@@ -23,7 +23,7 @@ class GUIcontroller():
         self.trace_input_blocks = {} #creates a list for the trace input block objects
             
         #creates the input block objects
-        for n in range(self.trace_controller.number_of_traces):
+        for n in range(self.trace_controller.n_traces):
                     
             self.trace_input_blocks[n] = GUI_elements.trace_input_block.TraceInputBlock(self, self.trace_controller, self.master, n)
             self.trace_input_blocks[n].main_frame.pack()
@@ -34,13 +34,16 @@ class GUIcontroller():
             
         print("building export frame")
         export_frame = tk.Frame(self.master, relief = tk.GROOVE, bd = 3)
-        tk.Button(export_frame, text = "export", command = self.export_measurement, padx = 10, pady = 2).pack()
+        tk.Button(export_frame, text = "export", command = self.export_measurements, padx = 10, pady = 2).pack()
         export_frame.pack()
         
         
-    def export_measurement(self):
+    def export_measurements(self):
         
         print("starting export")
+        self.trace_controller.export_measurements()
+        
+        
         
     def start_GUI(self):
         

@@ -7,7 +7,7 @@ class Run():
         
         print("buidling run instance")
         
-        self.time_data = {}
-        self.signal_data = {}
+        self.time_data = []
+        self.signal_data = []
         
         self.trace = trace

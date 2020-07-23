@@ -12,7 +12,7 @@ class MainController:
         
         print("initializing program")
         
-        self.number_of_traces = 4
+        self.number_of_traces = 3
         
         #build trace controller first so it can be sent to the trace controller
         print("building controllers")        

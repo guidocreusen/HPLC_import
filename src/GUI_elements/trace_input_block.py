@@ -18,11 +18,15 @@ class TraceInputBlock():
             #initializing frame attributes, not sctrictly necessary but for clarity
             self.main_frame = None
             self.title_subframe = None
+            self.buttons_subframe = None
             
             self.build_input_block()
             
             self.build_title_subframe()
             self.title_subframe.pack()
+            
+            self.build_buttons_subframe()
+            self.buttons_subframe.pack()
             
         def build_input_block(self):
             
@@ -37,3 +41,19 @@ class TraceInputBlock():
             
             self.title_subframe = tk.Frame(self.main_frame)
             tk.Label(self.title_subframe, text = "trace " + str(self.trace_number), font = "Helvetica 12 bold").pack(pady = 3)
+            
+        def build_buttons_subframe(self):
+            
+            print("building buttons subframe for trace " + str(self.trace_number))
+            
+            self.buttons_subframe = tk.Frame(self.main_frame)
+            tk.Button(self.buttons_subframe, text = "load", command = self.load, padx = 10, pady = 2).grid(row = 0, column = 0, padx = 5)
+            tk.Button(self.buttons_subframe, text = "clear", command = self.clear, padx = 10, pady = 2).grid(row = 0, column = 1, padx = 5)
+            
+        def load(self):
+            
+            print("clicked load button")
+            
+        def clear(self):
+            
+            print("clicked clear button")

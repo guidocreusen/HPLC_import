@@ -43,14 +43,14 @@ class ChannelInputBlock():
             
         def build_title_subframe(self):
             
-            print("building title subframe for channel " + str(self.channel_number))
+            print("building title subframe for channel " + str(self.channel_number + 1))
             
             self.title_subframe = tk.Frame(self.main_frame)
-            tk.Label(self.title_subframe, text = "channel " + str(self.channel_number), font = "Helvetica 12 bold").pack(pady = 3)
+            tk.Label(self.title_subframe, text = "channel " + str(self.channel_number + 1), font = "Helvetica 12 bold").pack(pady = 3)
             
         def build_buttons_subframe(self):
             
-            print("building buttons subframe for channel " + str(self.channel_number))
+            print("building buttons subframe for channel " + str(self.channel_number + 1))
             
             self.buttons_subframe = tk.Frame(self.main_frame)
             

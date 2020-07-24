@@ -7,14 +7,15 @@ from tkinter.filedialog import askopenfilenames
 from tkinter import messagebox # required for messagebox to work, even with tkinter/tk.messagebox as messagebox import isn't part of tkinter __init__
 
 class Channel():
-    
-    headerlines = 77
+     
     column_time = 0
     column_signal = 2
     
-    def __init__(self):
+    def __init__(self, n_headerlines):
         
         print("building channel instance")
+        
+        self.n_headerlines = n_headerlines
         
         #initialize baseline run object and measurement run objects
         self.baseline_run = None
@@ -57,7 +58,7 @@ class Channel():
             print("opened file")
                 
             #remove header lines
-            for n in range(self.headerlines):
+            for n in range(self.n_headerlines):
                 del file_lines[0]
             print("deleted header lines")
             

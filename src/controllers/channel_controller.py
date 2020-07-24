@@ -7,11 +7,12 @@ from tkinter.filedialog import askdirectory
 
 class ChannelController():
     
-    def __init__(self, number_of_channels):
+    def __init__(self, number_of_channels, n_headerlines):
         
         print("building channel controller instance")
         
         self.n_channels = number_of_channels
+        self.n_headerlines = n_headerlines
         self.channels = []
         
         self.create_channels()
@@ -24,7 +25,7 @@ class ChannelController():
         for n in range(self.n_channels):
             
             print("creating channel " + str(n))
-            self.channels.append(classes.channel.Channel())
+            self.channels.append(classes.channel.Channel(self.n_headerlines))
             
     def export_measurements(self):
         
@@ -97,5 +98,7 @@ class ChannelController():
                     
                 for i in range(self.n_channels):
                     write_string += "\t" + str(norm_subtr_runs[i][m])
+                    
+                write_string += "\n"
                 
                 save_file.write(write_string)

@@ -36,7 +36,7 @@ class MainController:
     def ask_channel_number(self):
         
         print("asking channel number")
-        answer = simpledialog.askinteger("Input", "Number of channels to combine?", parent=self.temp_frame, minvalue=0, maxvalue=4)
+        answer = simpledialog.askinteger("Input", "Number of channels to combine?", parent=self.temp_frame, minvalue=1, maxvalue=10)
         print(str(answer))
         
         if answer is None:

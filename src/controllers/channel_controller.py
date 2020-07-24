@@ -1,4 +1,4 @@
-#channel controller handles all channel instances as well as exporting
+#channel controller handles all channel instances as well as exporting to file
 
 import classes.channel
 from tkinter.filedialog import askopenfilename
@@ -45,37 +45,57 @@ class ChannelController():
             save_path = export_folder + "/" + run.filename.strip("UV_VIS_1.TXT") + ".TXT"
             save_file = open(save_path, 'w') # mode w means the file will be empty and overwritten
             
-            save_file.write("time\tsignal1\tsignal2\tsignal3\tsubtracted1\tsubtracted2\tsubtracted3\tnormalized1\tnormalized2\tnormalized3\n")
-            print("time\tsignal1\tsignal2\tsignal3")
+            #create header string and write to file
+            header_string = "time"
+            for m in range(self.n_channels):
+                header_string += "\tsignal" + str(m + 1)
+            for m in range(self.n_channels):
+                header_string += "\tsubtracted" + str(m + 1)
+            for m in range(self.n_channels):
+                header_string += "\tnornmalized" + str(m + 1)
+            header_string += "\n"
+            save_file.write(header_string)
+            print(header_string)
                         
-            s1 = run.signal_data
-            s2 = self.channels[1].measurement_runs[1].signal_data
-            s3 = self.channels[2].measurement_runs[2].signal_data
+            #load run signal data into different lists
+            runs = []
+            for m in range(self.n_channels):
+                runs.append(self.channels[m].measurement_runs[n].signal_data)
             
-            bs1 = []
-            bs2 = []
-            bs3 = []
-            ns1 = []
-            ns2 = []
-            ns3 = []
+            #create an empty list to load baseline-subtracted runs into
+            bg_subtr_runs = []
+            for m in range(self.n_channels):
+                bg_subtr_runs.append([])
             
-            #subtract background and append each line to lists bs1/2/3
-            for m in range(len(run.time_data)):                
-                bs1.append(s1[m] - self.channels[0].baseline_run.signal_data[m])
-                bs2.append(s2[m] - self.channels[1].baseline_run.signal_data[m])
-                bs3.append(s3[m] - self.channels[2].baseline_run.signal_data[m])
+            #subtract background and append each line the bg_subtr data list of the respective channel
+            for m in range(len(run.time_data)):
+                for i in range(self.n_channels):
+                    bg_subtr_runs[i].append(runs[i][m] - self.channels[i].baseline_run.signal_data[m])
+                
+            #create an empty list to load normalized (baseline subtr.) runs into
+            norm_subtr_runs = []
+            for m in range(self.n_channels):
+                norm_subtr_runs.append([])
             
-            #find min and max of subtracted channels
-            s1max = max(bs1)
-            s1min = min(bs1)                    
-            s2max = max(bs2)
-            s2min = min(bs2)
-            s3max = max(bs3)
-            s3min = min(bs3)
+            
+            #find min and max of background-subtracted channels, correct, and save into list of normalizedrun data
+            run_maxima = []
+            run_minima = []
+            for m in range(self.n_channels):
+                run_maxima.append(max(bg_subtr_runs[m]))
+                run_minima.append(min(bg_subtr_runs[m]))
             
             for m, t in enumerate(run.time_data):                
-                ns1.append((bs1[m]-s1min)/(s1max-s1min))
-                ns2.append((bs2[m]-s2min)/(s2max-s2min))
-                ns3.append((bs3[m]-s3min)/(s3max-s3min))
+                write_string = str(t)
                 
-                save_file.write(str(t) + "\t" + str(s1[m]) + "\t" + str(s2[m]) + "\t" + str(s3[m]) + "\t" + str(bs1[m]) + "\t" + str(bs2[m]) + "\t" + str(bs3[m]) + "\t" + str(ns1[m])  + "\t" + str(ns2[m])  + "\t" + str(ns3[m]) + "\n")
+                for i in range(self.n_channels):
+                    norm_subtr_runs[i].append((bg_subtr_runs[i][m]-run_minima[i])/(run_maxima[i]-run_minima[i]))
+                    write_string += "\t" + str(runs[i][m])
+                
+                for i in range(self.n_channels):
+                    write_string += "\t" + str(bg_subtr_runs[i][m])
+                    
+                for i in range(self.n_channels):
+                    write_string += "\t" + str(norm_subtr_runs[i][m])
+                
+                save_file.write(write_string)

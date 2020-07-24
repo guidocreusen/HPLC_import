@@ -1,12 +1,12 @@
-#trace object class
-#a trace consists of a baseline, and multiple measurements
+#channel object class
+#a channel has one or multiple measurements, and one or zero baselines
 import classes.run
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from tkinter.filedialog import askopenfilenames
 from tkinter import messagebox # required for messagebox to work, even with tkinter/tk.messagebox as messagebox import isn't part of tkinter __init__
 
-class Trace():
+class Channel():
     
     headerlines = 77
     column_time = 0
@@ -14,7 +14,7 @@ class Trace():
     
     def __init__(self):
         
-        print("building trace instance")
+        print("building channel instance")
         
         #initialize baseline run object and measurement run objects
         self.baseline_run = None

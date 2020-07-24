@@ -1,34 +1,34 @@
 import tkinter as tk
-import GUI_elements.trace_input_block
+import GUI_elements.channel_input_block
 
 class GUIcontroller():
     
-    def __init__(self, trace_controller):
+    def __init__(self, channel_controller):
         
         print("building GUI controller object")
-        self.trace_controller = trace_controller
+        self.channel_controller = channel_controller
          
         print("initializing GUI root / master frame")
         self.master = tk.Tk() # top level Frame, which also can start the program
-        self.master.title("import, subtract, and combine HPLC traces") # sets the title displayed in the window frame bar
+        self.master.title("import, subtract, and combine HPLC channels") # sets the title displayed in the window frame bar
         
-        #initiate creation of the trace input blocks
-        self.build_trace_input_blocks()
+        #initiate creation of the channel input blocks
+        self.build_channel_input_blocks()
         
         self.build_export_block()
         
-    def build_trace_input_blocks(self):
+    def build_channel_input_blocks(self):
         
-        print("creating trace input blocks")
-        self.trace_input_blocks = {} #creates a list for the trace input block objects
+        print("creating channel input blocks")
+        self.channel_input_blocks = [] #creates a list for the channel input block objects
             
         #creates the input block objects
-        for n in range(self.trace_controller.n_traces):
+        for n in range(self.channel_controller.n_channels):
                     
-            self.trace_input_blocks[n] = GUI_elements.trace_input_block.TraceInputBlock(self, self.trace_controller, self.master, n)
-            self.trace_input_blocks[n].main_frame.pack()
+            self.channel_input_blocks.append(GUI_elements.channel_input_block.ChannelInputBlock(self, self.channel_controller, self.master, n))
+            self.channel_input_blocks[n].main_frame.pack()
                     
-            print("created trace input block instance " + str(n))
+            print("created channel input block instance " + str(n))
                     
     def build_export_block(self):
             
@@ -41,7 +41,7 @@ class GUIcontroller():
     def export_measurements(self):
         
         print("starting export")
-        self.trace_controller.export_measurements()
+        self.channel_controller.export_measurements()
         
         
         

@@ -3,7 +3,7 @@
 
 class Run():
     
-    def __init__(self, trace, filepath):
+    def __init__(self, channel, filepath):
         
         print("buidling run instance")
         
@@ -14,4 +14,4 @@ class Run():
         self.filename = split_filepath[len(split_filepath)-1]
         print("assigned file name " + self.filename)
         
-        self.trace = trace
+        self.channel = channel

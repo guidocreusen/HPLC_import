@@ -1,21 +1,21 @@
 import tkinter as tk
 
-# creates a trace input block with the following features
-#   shows a trace number
+# creates a channel input block with the following features
+#   shows a channel number
 #   load and clear buttons for baseline and measurements
 #   text field for name
 
-class TraceInputBlock():
+class ChannelInputBlock():
     
-        def __init__(self, GUI_controller, trace_controller, master_frame, trace_number):
+        def __init__(self, GUI_controller, channel_controller, master_frame, channel_number):
             
-            print("building trace input block instance " + str(trace_number))
+            print("building channel input block instance " + str(channel_number))
             
             #catches the parameters and saves them as attributes for the instance
             self.GUI_controller = GUI_controller
-            self.trace_controller = trace_controller
-            self.trace_number = trace_number
-            self.trace = trace_controller.traces[trace_number]
+            self.channel_controller = channel_controller
+            self.channel_number = channel_number
+            self.channel = channel_controller.channels[channel_number]
             self.master_frame = master_frame
             
             #creates tkinter IntVars to show the number of files loaded
@@ -43,14 +43,14 @@ class TraceInputBlock():
             
         def build_title_subframe(self):
             
-            print("building title subframe for trace " + str(self.trace_number))
+            print("building title subframe for channel " + str(self.channel_number))
             
             self.title_subframe = tk.Frame(self.main_frame)
-            tk.Label(self.title_subframe, text = "trace " + str(self.trace_number), font = "Helvetica 12 bold").pack(pady = 3)
+            tk.Label(self.title_subframe, text = "channel " + str(self.channel_number), font = "Helvetica 12 bold").pack(pady = 3)
             
         def build_buttons_subframe(self):
             
-            print("building buttons subframe for trace " + str(self.trace_number))
+            print("building buttons subframe for channel " + str(self.channel_number))
             
             self.buttons_subframe = tk.Frame(self.main_frame)
             
@@ -69,24 +69,24 @@ class TraceInputBlock():
             
             print("clicked load measurements button")
             
-            self.trace.load_measurements()
-            self.n_measurements.set(len(self.trace.measurement_runs))
+            self.channel.load_measurements()
+            self.n_measurements.set(len(self.channel.measurement_runs))
             
             
         def clear_measurements(self):
             
             print("clicked clear measurements button")
-            self.trace.measurement_runs = {}
-            self.n_measurements.set(len(self.trace.measurement_runs))
+            self.channel.measurement_runs = {}
+            self.n_measurements.set(len(self.channel.measurement_runs))
 
             
         def load_baseline(self):
             
             print("clicked load baseline button")
             
-            self.trace.load_baseline()
+            self.channel.load_baseline()
             
-            if self.trace.baseline_run:
+            if self.channel.baseline_run:
                 self.n_baseline.set(1)
             else:
                 self.n_baseline.set(0)
@@ -95,9 +95,9 @@ class TraceInputBlock():
         def clear_baseline(self):
             
             print("clicked clear baseline button")
-            self.trace.baseline_run = None
+            self.channel.baseline_run = None
             
-            if self.trace.baseline_run:
+            if self.channel.baseline_run:
                 self.n_baseline.set(1)
             else:
                 self.n_baseline.set(0)

@@ -50,7 +50,7 @@ class MainController:
     def ask_headerline_number(self):
         
         print("asking number of header lines")
-        answer = simpledialog.askinteger("Input", "How many header lines does the file have (standard 77 for Chromeleon)?", parent=self.temp_frame, minvalue=0, maxvalue=1000)
+        answer = simpledialog.askinteger("Input", "How many header lines does the file have? (standard 77 for Chromeleon)", parent=self.temp_frame, minvalue=0, maxvalue=1000)
         print(str(answer))
         
         if answer is None:

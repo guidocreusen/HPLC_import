@@ -87,17 +87,17 @@ class ChannelController():
                 run_minima.append(min(bg_subtr_runs[m]))
             
             for m, t in enumerate(run.time_data):                
-                write_string = str(t)
+                write_string = format(t,'.3f')
                 
                 for i in range(self.n_channels):
                     norm_subtr_runs[i].append((bg_subtr_runs[i][m]-run_minima[i])/(run_maxima[i]-run_minima[i]))
-                    write_string += "\t" + str(runs[i][m])
+                    write_string += "\t" + format(runs[i][m], '.5f')
                 
                 for i in range(self.n_channels):
-                    write_string += "\t" + str(bg_subtr_runs[i][m])
+                    write_string += "\t" + format(bg_subtr_runs[i][m], '.5f')
                     
                 for i in range(self.n_channels):
-                    write_string += "\t" + str(norm_subtr_runs[i][m])
+                    write_string += "\t" + format(norm_subtr_runs[i][m], '.5f')
                     
                 write_string += "\n"
                 

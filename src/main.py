@@ -17,6 +17,7 @@ class MainController:
         self.n_headerlines = 0
         
         self.temp_frame = tk.Tk()
+        self.temp_frame.lift()
         self.ask_channel_number()
         self.ask_headerline_number()
         self.temp_frame.destroy()
@@ -36,8 +37,7 @@ class MainController:
         #creates the GUI controller
         self.GUI_controller.start_GUI()
         
-    def ask_channel_number(self):
-        
+    def ask_channel_number(self):        
         print("asking number of channels")
         answer = simpledialog.askinteger("Input", "Number of channels to combine?", parent=self.temp_frame, minvalue=1, maxvalue=10)
         print(str(answer))

@@ -71,6 +71,10 @@ class ChannelController():
             #subtract background and append each line the bg_subtr data list of the respective channel
             for m in range(len(run.time_data)):
                 for i in range(self.n_channels):
+                    print("value of i: " + str(i))
+                    print("value of m: " + str(m))
+                    print("lenght of self.channels[i].baseline_run.signal_data[m]: " + str(len(self.channels[i].baseline_run.signal_data)))
+                    print("length of runs[i][m]: " + str(len(runs[i])))
                     bg_subtr_runs[i].append(runs[i][m] - self.channels[i].baseline_run.signal_data[m])
                 
             #create an empty list to load normalized (baseline subtr.) runs into

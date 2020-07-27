@@ -1,6 +1,7 @@
 #channel controller handles all channel instances as well as exporting to file
 
 import classes.channel
+import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from tkinter.filedialog import asksaveasfilename 
 from tkinter.filedialog import askdirectory
@@ -14,6 +15,10 @@ class ChannelController():
         self.n_channels = number_of_channels
         self.n_headerlines = n_headerlines
         self.channels = []
+        
+        #these will be set to tkinter IntVar() in the GUI controller, which cannot happen until the root has been initiated
+        self.export_baseline_subtr = None
+        self.export_norm = None
         
         self.create_channels()
         

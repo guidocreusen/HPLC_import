@@ -16,6 +16,7 @@ class MainController:
         self.number_of_channels = 1
         self.n_headerlines = 0
         
+        #create a temporary frame in the foreground to prompt the number of channels and headerlines
         self.temp_frame = tk.Tk()
         self.temp_frame.lift()
         self.ask_channel_number()
@@ -27,7 +28,7 @@ class MainController:
         
         #build channel controller first so it can be sent to the channel controller
         print("building controllers")        
-        self.channel_controller = controllers.channel_controller.ChannelController(self.number_of_channels, self.n_headerlines)
+        self.channel_controller = controllers.channel_controller.ChannelController(self.n_channels, self.n_headerlines)
         self.GUI_controller = controllers.GUI_controller.GUIcontroller(self.channel_controller)
         
     def start(self):
@@ -45,7 +46,7 @@ class MainController:
         if answer is None:
             self.ask_channel_number()
         else:
-            self.number_of_channels = answer
+            self.n_channels = answer
             
     def ask_headerline_number(self):
         

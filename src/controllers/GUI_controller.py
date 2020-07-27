@@ -15,6 +15,9 @@ class GUIcontroller():
         #initiate creation of the channel input blocks
         self.build_channel_input_blocks()
         
+        #initiate creation of the options block
+        self.build_options_block()
+        
         self.build_export_block()
         
     def build_channel_input_blocks(self):
@@ -29,6 +32,17 @@ class GUIcontroller():
             self.channel_input_blocks[n].main_frame.pack()
                     
             print("created channel input block instance " + str(n))
+            
+    def build_options_block(self):
+        print("building options frame")
+        
+        self.channel_controller.export_baseline_subtr = tk.IntVar()
+        self.channel_controller.export_norm = tk.IntVar
+        
+        options_frame = tk.Frame(self.master, relief = tk.GROOVE, bd = 3)
+        tk.Checkbutton(options_frame, text = "subtract baseline", variable = self.channel_controller.export_baseline_subtr).grid(row = 0)
+        tk.Checkbutton(options_frame, text = "normalize (0-1)", variable = self.channel_controller.export_norm).grid(row = 1)
+        options_frame.pack()
                     
     def build_export_block(self):
             

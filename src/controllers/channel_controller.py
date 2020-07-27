@@ -55,10 +55,15 @@ class ChannelController():
             header_string = "time"
             for m in range(self.n_channels):
                 header_string += "\tsignal" + str(m + 1)
-            for m in range(self.n_channels):
-                header_string += "\tsubtracted" + str(m + 1)
-            for m in range(self.n_channels):
-                header_string += "\tnornmalized" + str(m + 1)
+            
+            if self.export_baseline_subtr.get() == 1:    
+                for m in range(self.n_channels):
+                    header_string += "\tsubtracted" + str(m + 1)
+            
+            if self.export_norm.get() == 1:    
+                for m in range(self.n_channels):
+                    header_string += "\tnornmalized" + str(m + 1)
+            
             header_string += "\n"
             save_file.write(header_string)
             print(header_string)
@@ -69,40 +74,54 @@ class ChannelController():
                 runs.append(self.channels[m].measurement_runs[n].signal_data)
             
             #create an empty list to load baseline-subtracted runs into
-            bg_subtr_runs = []
-            for m in range(self.n_channels):
-                bg_subtr_runs.append([])
+            if self.export_baseline_subtr.get() == 1:
+                bg_subtr_runs = []
+                for m in range(self.n_channels):
+                    bg_subtr_runs.append([])
             
-            #subtract background and append each line the bg_subtr data list of the respective channel
-            for m in range(len(run.time_data)):
-                for i in range(self.n_channels):
-                    bg_subtr_runs[i].append(runs[i][m] - self.channels[i].baseline_run.signal_data[m])
+                #subtract background and append each line the bg_subtr data list of the respective channel
+                for m in range(len(run.time_data)):
+                    for i in range(self.n_channels):
+                        bg_subtr_runs[i].append(runs[i][m] - self.channels[i].baseline_run.signal_data[m])
                 
             #create an empty list to load normalized (baseline subtr.) runs into
-            norm_subtr_runs = []
-            for m in range(self.n_channels):
-                norm_subtr_runs.append([])
+            if self.export_norm.get() == 1: 
+                norm_subtr_runs = []
+                for m in range(self.n_channels):
+                    norm_subtr_runs.append([])
             
             
-            #find min and max of background-subtracted channels, correct, and save into list of normalizedrun data
-            run_maxima = []
-            run_minima = []
-            for m in range(self.n_channels):
-                run_maxima.append(max(bg_subtr_runs[m]))
-                run_minima.append(min(bg_subtr_runs[m]))
+                #find min and max of background-subtracted channels, correct, and save into list of normalizedrun data
+                run_maxima = []
+                run_minima = []
+                for m in range(self.n_channels):
+                    if self.export_baseline_subtr.get() == 1:        
+                        run_maxima.append(max(bg_subtr_runs[m]))
+                        run_minima.append(min(bg_subtr_runs[m]))
+                   
+                    elif self.export_baseline_subtr.get() == 0:
+                        run_maxima.append(max(runs[m]))
+                        run_minima.append(min(runs[m]))
             
             for m, t in enumerate(run.time_data):                
                 write_string = format(t,'.3f')
                 
                 for i in range(self.n_channels):
-                    norm_subtr_runs[i].append((bg_subtr_runs[i][m]-run_minima[i])/(run_maxima[i]-run_minima[i]))
-                    write_string += "\t" + format(runs[i][m], '.5f')
+                    if self.export_norm.get() == 1 and self.export_baseline_subtr.get() == 1:
+                        norm_subtr_runs[i].append((bg_subtr_runs[i][m]-run_minima[i])/(run_maxima[i]-run_minima[i]))
+                    elif self.export_norm.get() == 1 and self.export_baseline_subtr.get() == 0:
+                        norm_subtr_runs[i].append((runs[i][m]-run_minima[i])/(run_maxima[i]-run_minima[i]))
                 
                 for i in range(self.n_channels):
-                    write_string += "\t" + format(bg_subtr_runs[i][m], '.5f')
-                    
-                for i in range(self.n_channels):
-                    write_string += "\t" + format(norm_subtr_runs[i][m], '.5f')
+                    write_string += "\t" + format(runs[i][m], '.5f')
+                
+                if self.export_baseline_subtr.get() == 1:
+                    for i in range(self.n_channels):
+                        write_string += "\t" + format(bg_subtr_runs[i][m], '.5f')
+                
+                if self.export_norm.get() == 1:    
+                    for i in range(self.n_channels):
+                        write_string += "\t" + format(norm_subtr_runs[i][m], '.5f')
                     
                 write_string += "\n"
                 

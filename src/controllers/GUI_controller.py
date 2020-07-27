@@ -37,7 +37,10 @@ class GUIcontroller():
         print("building options frame")
         
         self.channel_controller.export_baseline_subtr = tk.IntVar()
-        self.channel_controller.export_norm = tk.IntVar
+        self.channel_controller.export_norm = tk.IntVar()
+        print(str(self.channel_controller.export_baseline_subtr.get()))
+        print(str(self.channel_controller.export_norm.get()))
+        
         
         options_frame = tk.Frame(self.master, relief = tk.GROOVE, bd = 3)
         tk.Checkbutton(options_frame, text = "subtract baseline", variable = self.channel_controller.export_baseline_subtr).grid(row = 0)
